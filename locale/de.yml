@@ -1,0 +1,5 @@
+flarum-ext-amazon-product-api:
+  forum:
+    button:
+      tooltip: Amazon Product API
+      label: Amazon Product API
