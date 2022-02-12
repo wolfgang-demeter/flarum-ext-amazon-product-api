@@ -7,14 +7,21 @@ export default class AmazonProductApiModal extends Modal {
       <div className={`Modal modal-dialog amazon-product-api`}>
         <div className="Modal-content">
           <div className="Modal-header">
-            <h3 className="App-titleControl App-titleControl--text">{app.translator.trans('flarum-ext-amazon-product-api.forum.modal.headline')}</h3>
+            <h3 className="App-titleControl App-titleControl--text">{app.translator.trans('wd-amazon-product-api.forum.modal.headline')}</h3>
           </div>
 
           <div className="Modal-body">
             Add some Amazon Product API stuff
 
+
+          </div>
+
+          <div className="Modal-footer">
+            <Button onclick={this.hide.bind(this)} className="Button Button--primary">
+              {app.translator.trans('wd-amazon-product-api.forum.modal.accept')}
+            </Button>
             <Button onclick={this.hide.bind(this)} className="Button">
-              {app.translator.trans('flarum-ext-amazon-product-api.forum.modal.cancel')}
+              {app.translator.trans('wd-amazon-product-api.forum.modal.cancel')}
             </Button>
           </div>
         </div>

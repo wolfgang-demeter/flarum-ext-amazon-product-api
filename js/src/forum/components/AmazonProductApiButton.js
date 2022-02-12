@@ -8,7 +8,7 @@ import Tooltip from 'flarum/common/components/Tooltip';
 export default class AmazonProductApiButton extends Component {
   view() {
     return (
-      <Tooltip text={app.translator.trans('flarum-ext-amazon-product-api.forum.button.tooltip')}>
+      <Tooltip text={app.translator.trans('wd-amazon-product-api.forum.button.tooltip')}>
         <Button
           className={classList([
             'Button',
@@ -19,7 +19,7 @@ export default class AmazonProductApiButton extends Component {
           icon={'fab fa-amazon'}
           onclick={this.AmazonProductApiButtonClicked.bind(this)}
         >
-          <span className="Button-label">{app.translator.trans('flarum-ext-amazon-product-api.forum.button.label')}</span>
+          <span className="Button-label">{app.translator.trans('wd-amazon-product-api.forum.button.label')}</span>
         </Button>
       </Tooltip>
     );

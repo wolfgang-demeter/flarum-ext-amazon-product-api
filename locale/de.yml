@@ -1,5 +1,19 @@
-flarum-ext-amazon-product-api:
+wd-amazon-product-api:
+  admin:
+    permissions:
+      use_amazon_product_api: Amazon Product API benutzen
+
+    settings:
+      partner_tag: Amazon Partner Tag
+      access_key: Access Key
+      secret_key: Secret Key
+
   forum:
     button:
       tooltip: Amazon Product API
       label: Amazon Product API
+
+    modal:
+      headline: Amazon Product API
+      accept: Übernehmen
+      cancel: Abbrechen
