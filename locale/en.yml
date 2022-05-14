@@ -15,5 +15,8 @@ wd-amazon-product-api:
 
     modal:
       headline: Amazon Product API
+      asin: ASIN
+      locale: Country
+      search: Search
       accept: Accept
       cancel: Cancel
