@@ -17,7 +17,7 @@ app.initializers.add('wolfgang-demeter/flarum-ext-amazon-product-api', () => {
     })
     .registerSetting({
       setting: 'wd-amazon-product-api.secretKey',
-      type: 'text',
+      type: 'password',
       label: app.translator.trans('wd-amazon-product-api.admin.settings.secret_key'),
       // placeholder: 'xyz-21',
     })
