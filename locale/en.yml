@@ -36,4 +36,5 @@ wd-amazon-product-api:
       cancel: Cancel
 
     text_insert:
+      image_alt: cover
       for: for

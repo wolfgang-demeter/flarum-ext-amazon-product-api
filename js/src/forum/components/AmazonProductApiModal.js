@@ -92,7 +92,7 @@ export default class AmazonProductApiModal extends Modal {
           // add result back to editor
           this.hide();
           app.composer.editor.insertAtCursor(
-            '[![](' + data.resultImage + ')](' + data.resultUrl + ')\n' +
+            '[![' + app.translator.trans('wd-amazon-product-api.forum.text_insert.image_alt') + '](' + data.resultImage + ')](' + data.resultUrl + ')\n' +
             '[' + data.resultTitle + '](' + data.resultUrl + ')\n' +
             app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**\n'
           );
