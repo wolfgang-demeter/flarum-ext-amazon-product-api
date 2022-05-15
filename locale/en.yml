@@ -1,7 +1,9 @@
 wd-amazon-product-api:
   lib:
     partner_tag:
+      ca: Canada (amazon.ca)
       de: Germany (amazon.de)
+      es: Spain (amazon.es)
       fr: France (amazon.fr)
       it: Italy (amazon.it)
       uk: United Kingdom (amazon.co.uk)

@@ -27,6 +27,11 @@ export default class AmazonProductApiModal extends Modal {
           <div className="helpText">{app.translator.trans('wd-amazon-product-api.lib.help_text')}</div>
 
           <div className="Form-group">
+            <label>{app.translator.trans('wd-amazon-product-api.forum.modal.asin')}</label>
+            <input type="text" autocomplete="off" name="asin" className="FormControl" bidi={this.asin} disabled={this.loading} />
+          </div>
+
+          <div className="Form-group">
             <label>{app.translator.trans('wd-amazon-product-api.forum.modal.country')}</label>
             {Select.component(
               {
@@ -35,11 +40,6 @@ export default class AmazonProductApiModal extends Modal {
                 options: this.countryOptions(),
               }
             )}
-          </div>
-
-          <div className="Form-group">
-            <label>{app.translator.trans('wd-amazon-product-api.forum.modal.asin')}</label>
-            <input type="text" autocomplete="off" name="asin" className="FormControl" bidi={this.asin} disabled={this.loading} />
           </div>
 
           <div className="Form-group">
@@ -59,7 +59,7 @@ export default class AmazonProductApiModal extends Modal {
 
   countryOptions() {
     let options;
-    options = ['de', 'fr', 'it', 'uk', 'us'].reduce((o, key) => {
+    options = ['ca', 'de', 'es', 'fr', 'it', 'uk', 'us'].reduce((o, key) => {
       o[key] = app.translator.trans(`wd-amazon-product-api.lib.partner_tag.${key}`);
 
       return o;
@@ -116,7 +116,7 @@ export default class AmazonProductApiModal extends Modal {
           );
         } else {
           // add result back to editor
-          this.hide();
+          // this.hide();
           app.composer.editor.insertAtCursor(
             '[![](' + data.resultImage + ')](' + data.resultUrl + ')\n' +
             '[' + data.resultTitle + '](' + data.resultUrl + ')\n' +

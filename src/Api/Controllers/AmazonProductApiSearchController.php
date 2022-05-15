@@ -36,7 +36,9 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
     public function handle(Request $request): Response
     {
         $amzWebservices = array(
+            'ca' => array('host' => 'webservices.amazon.ca', 'region' => 'us-east-1', 'marketplace' => 'www.amazon.ca'),
             'de' => array('host' => 'webservices.amazon.de', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.de'),
+            'es' => array('host' => 'webservices.amazon.es', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.es'),
             'fr' => array('host' => 'webservices.amazon.fr', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.fr'),
             'it' => array('host' => 'webservices.amazon.it', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.it'),
             'uk' => array('host' => 'webservices.amazon.co.uk', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.co.uk'),
@@ -136,7 +138,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
                 'resultUrl'     => substr($resultObject['SearchResult']['Items'][0]['DetailPageURL'], 0, strpos($resultObject['SearchResult']['Items'][0]['DetailPageURL'], '?')),
                 'resultImage'   => $resultObject['SearchResult']['Items'][0]['Images']['Primary']['Large']['URL'],
                 'resultTitle'   => $resultObject['SearchResult']['Items'][0]['ItemInfo']['Title']['DisplayValue'],
-                'resultPrice'   => $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['Price']['DisplayAmount'],
+                'resultPrice'   => str_replace('.', ',', $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['Price']['DisplayAmount']),
                 'resultObject'  => $resultObject
             ]);
         }

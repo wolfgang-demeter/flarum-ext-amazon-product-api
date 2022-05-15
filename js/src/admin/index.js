@@ -23,9 +23,21 @@ app.initializers.add('wolfgang-demeter/flarum-ext-amazon-product-api', () => {
       type: 'hidden',
     })
     .registerSetting({
+      setting: 'wd-amazon-product-api.partnerTag.ca',
+      type: 'text',
+      label: app.translator.trans('wd-amazon-product-api.lib.partner_tag.ca'),
+      placeholder: app.translator.trans('wd-amazon-product-api.admin.settings.partner_tag_placeholder'),
+    })
+    .registerSetting({
       setting: 'wd-amazon-product-api.partnerTag.de',
       type: 'text',
       label: app.translator.trans('wd-amazon-product-api.lib.partner_tag.de'),
+      placeholder: app.translator.trans('wd-amazon-product-api.admin.settings.partner_tag_placeholder'),
+    })
+    .registerSetting({
+      setting: 'wd-amazon-product-api.partnerTag.es',
+      type: 'text',
+      label: app.translator.trans('wd-amazon-product-api.lib.partner_tag.es'),
       placeholder: app.translator.trans('wd-amazon-product-api.admin.settings.partner_tag_placeholder'),
     })
     .registerSetting({
