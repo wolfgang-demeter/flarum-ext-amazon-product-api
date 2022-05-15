@@ -1,6 +1,6 @@
 {
     "name": "wolfgang-demeter/flarum-ext-amazon-product-api",
-    "description": "Amazon Product API integration for Flarum",
+    "description": "Amazon Product Adevertising API (PA-API) integration for Flarum",
     "type": "flarum-extension",
     "license": "MIT",
     "support": {

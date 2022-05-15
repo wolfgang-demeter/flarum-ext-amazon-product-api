@@ -1,4 +1,5 @@
 <?php
+
 namespace WD\AmazonProductApi\Extenders;
 
 use Flarum\Api\Serializer\ForumSerializer;

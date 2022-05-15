@@ -1,22 +1,33 @@
 wd-amazon-product-api:
+  lib:
+    partner_tag:
+      de: Germany (amazon.de)
+      fr: France (amazon.fr)
+      it: Italy (amazon.it)
+      uk: United Kingdom (amazon.co.uk)
+      us: USA (amazon.com)
+    help_text: The <a>Amazon Product Advertising API (PA-API)</a> only returns results if the country-specific account has qualified sales and has been accepted into the Amazon Associates Program!
+
   admin:
     permission:
-      use_amazon_product_api: Use Amazon Product API
+      use_amazon_product_api: Use Amazon Product Adevertising API (PA-API)
 
     settings:
-      partner_tag: Amazon Partner Tag
       access_key: Access Key
       secret_key: Secret Key
+      partner_tag_title: Amazon Partner Tags
+      partner_tag_placeholder: Leave empty to not cover API in this country
 
   forum:
     button:
-      tooltip: Amazon Product API
-      label: Amazon Product API
+      tooltip: Amazon Product Adevertising API (PA-API)
+      label: Amazon Product Adevertising API (PA-API)
 
     modal:
-      headline: Amazon Product API
+      headline: Amazon Product Adevertising API (PA-API)
       asin: ASIN
-      locale: Country
+      country: Country
       search: Search
+      exception: "The following exception occured: <code>{exception}</code>"
       accept: Accept
       cancel: Cancel
