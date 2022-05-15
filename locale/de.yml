@@ -29,7 +29,11 @@ wd-amazon-product-api:
       headline: Amazon Product Adevertising API (PA-API)
       asin: ASIN
       country: Land
-      search: Suchen
+      hint: <b>Preisangabe bitte nur bei Preistipps anzeigen</b>, andernfalls bitte von eingefügtem Text entfernen.
+      search: Suchen & Einfügen
       exception: "Der folgende Fehler ist aufgetreten: <b><code>{exception}</code></b>"
       accept: Übernehmen
       cancel: Abbrechen
+
+    text_insert:
+      for: für

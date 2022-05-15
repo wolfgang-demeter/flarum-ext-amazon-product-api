@@ -9,8 +9,7 @@
         "source": "https://github.com/wolfgang-demeter/flarum-ext-amazon-product-api"
     },
     "require": {
-        "flarum/core": "^1.0",
-        "flarum/bbcode": "^1.0"
+        "flarum/core": "^1.0"
     },
     "autoload": {
         "psr-4": {"WD\\AmazonProductApi\\": "src/"}

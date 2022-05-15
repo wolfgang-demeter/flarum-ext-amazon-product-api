@@ -42,6 +42,8 @@ export default class AmazonProductApiModal extends Modal {
             )}
           </div>
 
+          <div className="helpText">{app.translator.trans('wd-amazon-product-api.forum.modal.hint')}</div>
+
           <div className="Form-group">
             {Button.component(
               {
@@ -70,33 +72,6 @@ export default class AmazonProductApiModal extends Modal {
   onsubmit(e) {
     e.preventDefault();
 
-    // if (this.asin() === '') {
-    //   alert('ASIN empty');
-    //   this.hide()
-    //   return;
-    // }
-
-    // this.loading = true;
-    // this.alertAttrs = null;
-
-    // app.session.user
-    //   .save({
-    //     country: this.country(),
-    //     asin: this.asin()
-    //   }, { errorHandler: this.onerror.bind(this) })
-    //   .then(() => {
-    //     this.success = true;
-    //     // this.hide();
-    //   })
-    //   .catch(() => {})
-    //   .then(this.loaded.bind(this));
-
-    // const asin = this.asin();
-    // console.log(this.country());
-    // var c = document.getElementByName("country");
-    // var strUser = e.value;
-    // console.log(c.value);
-
     app
       .request({
         url: app.forum.attribute('apiUrl') + '/wd-amazon-product-api-search?country=' + encodeURIComponent(this.country()) + '&asin=' + encodeURIComponent(this.asin()),
@@ -104,7 +79,6 @@ export default class AmazonProductApiModal extends Modal {
       })
       .then((data) => {
         // loadingIcon.remove();
-        // console.log(data.resultTitle);
 
         if (data.exception) {
           // an exception occured
@@ -116,11 +90,11 @@ export default class AmazonProductApiModal extends Modal {
           );
         } else {
           // add result back to editor
-          // this.hide();
+          this.hide();
           app.composer.editor.insertAtCursor(
             '[![](' + data.resultImage + ')](' + data.resultUrl + ')\n' +
             '[' + data.resultTitle + '](' + data.resultUrl + ')\n' +
-            'für **' + data.resultPrice + '**\n'
+            app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**\n'
           );
         }
       });

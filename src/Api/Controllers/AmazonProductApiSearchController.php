@@ -69,14 +69,17 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         $searchItemRequest->Availability = "IncludeOutOfStock";
         $searchItemRequest->Resources = [
             "Images.Primary.Large",
-            "Images.Variants.Large",
+            // "Images.Variants.Large",
             // "ItemInfo.ByLineInfo",
+            // "ItemInfo.ContentInfo",
+            // "ItemInfo.ContentRating",
             // "ItemInfo.Features",
+            // "ItemInfo.ManufactureInfo",
             // "ItemInfo.ProductInfo",
             // "ItemInfo.TechnicalInfo",
             "ItemInfo.Title",
             "Offers.Listings.Price",
-            "SearchRefinements",
+            // "SearchRefinements",
         ];
         $payload = json_encode($searchItemRequest);
 
