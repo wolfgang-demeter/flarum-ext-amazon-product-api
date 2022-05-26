@@ -1,13 +1,13 @@
 wd-amazon-product-api:
   lib:
     partner_tag:
-      ca: Canada (amazon.ca)
-      de: Germany (amazon.de)
-      es: Spain (amazon.es)
-      fr: France (amazon.fr)
-      it: Italy (amazon.it)
-      uk: United Kingdom (amazon.co.uk)
-      us: USA (amazon.com)
+      ca: amazon.ca - Canada
+      de: amazon.de - Germany
+      es: amazon.es - Spain
+      fr: amazon.fr - France
+      it: amazon.it - Italy
+      uk: amazon.co.uk - United Kingdom
+      us: amazon.com - USA
     help_text: The <a>Amazon Product Advertising API (PA-API)</a> only returns results if the country-specific account has qualified sales and has been accepted into the Amazon Associates Program!
 
   admin:
