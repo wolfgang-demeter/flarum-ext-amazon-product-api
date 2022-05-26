@@ -89,13 +89,23 @@ export default class AmazonProductApiModal extends Modal {
             })
           );
         } else {
+          let editorString = '';
+
+          if (data.resultImage) {
+            editorString += '[![' + app.translator.trans('wd-amazon-product-api.forum.text_insert.image_alt') + '](' + data.resultImage + ')](' + data.resultUrl + ')\n';
+          }
+
+          if (data.resultTitle) {
+            editorString += '[' + data.resultTitle + '](' + data.resultUrl + ')\n';
+          }
+
+          if (data.resultPrice) {
+            editorString += app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**\n';
+          }
+
           // add result back to editor
           this.hide();
-          app.composer.editor.insertAtCursor(
-            '[![' + app.translator.trans('wd-amazon-product-api.forum.text_insert.image_alt') + '](' + data.resultImage + ')](' + data.resultUrl + ')\n' +
-            '[' + data.resultTitle + '](' + data.resultUrl + ')\n' +
-            app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**\n'
-          );
+          app.composer.editor.insertAtCursor(editorString);
         }
       });
   }
