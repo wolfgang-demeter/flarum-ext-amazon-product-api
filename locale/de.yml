@@ -38,3 +38,7 @@ wd-amazon-product-api:
     text_insert:
       image_alt: Cover
       for: für
+      savings:
+        spacer: '–'
+        savings: entspricht einer Ersparnis von
+        basis: ggü.

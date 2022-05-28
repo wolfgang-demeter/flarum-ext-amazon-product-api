@@ -38,3 +38,7 @@ wd-amazon-product-api:
     text_insert:
       image_alt: cover
       for: for
+      savings:
+        spacer: '–'
+        savings: corresponds to a saving of
+        basis: compared to

@@ -91,16 +91,35 @@ export default class AmazonProductApiModal extends Modal {
         } else {
           let editorString = '';
 
+          // image
           if (data.resultImage) {
             editorString += '[![' + app.translator.trans('wd-amazon-product-api.forum.text_insert.image_alt') + '](' + data.resultImage + ')](' + data.resultUrl + ')\n';
           }
 
+          // title
           if (data.resultTitle) {
             editorString += '[' + data.resultTitle + '](' + data.resultUrl + ')\n';
           }
 
+          // price & savings
           if (data.resultPrice) {
-            editorString += app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**\n';
+            editorString += app.translator.trans('wd-amazon-product-api.forum.text_insert.for') + ' **' + data.resultPrice + '**';
+
+            if (data.resultSavings || data.resultSavingBasis) {
+              editorString += ' _' + app.translator.trans('wd-amazon-product-api.forum.text_insert.savings.spacer');
+
+              if (data.resultSavings) {
+                editorString += ' ' + app.translator.trans('wd-amazon-product-api.forum.text_insert.savings.savings') + ' ' + data.resultSavings;
+              }
+
+              if (data.resultSavingBasis) {
+                editorString += ' ' + app.translator.trans('wd-amazon-product-api.forum.text_insert.savings.basis') + ' ' + data.resultSavingBasis;
+              }
+
+              editorString += '_';
+            }
+
+            editorString += '\n';
           }
 
           // add result back to editor

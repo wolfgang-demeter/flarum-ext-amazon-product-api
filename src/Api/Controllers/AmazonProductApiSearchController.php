@@ -79,6 +79,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
             // "ItemInfo.TechnicalInfo",
             "ItemInfo.Title",
             "Offers.Listings.Price",
+            "Offers.Listings.SavingBasis",
             // "SearchRefinements",
         ];
         $payload = json_encode($searchItemRequest);
@@ -138,11 +139,13 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
             ]);
         } else {
             return new JsonResponse([
-                'resultUrl'     => substr($resultObject['SearchResult']['Items'][0]['DetailPageURL'], 0, strpos($resultObject['SearchResult']['Items'][0]['DetailPageURL'], '?')),
-                'resultImage'   => $resultObject['SearchResult']['Items'][0]['Images']['Primary']['Large']['URL'],
-                'resultTitle'   => $resultObject['SearchResult']['Items'][0]['ItemInfo']['Title']['DisplayValue'],
-                'resultPrice'   => str_replace('.', ',', $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['Price']['DisplayAmount']),
-                'resultObject'  => $resultObject
+                'resultUrl'         => substr($resultObject['SearchResult']['Items'][0]['DetailPageURL'], 0, strpos($resultObject['SearchResult']['Items'][0]['DetailPageURL'], '?')),
+                'resultImage'       => $resultObject['SearchResult']['Items'][0]['Images']['Primary']['Large']['URL'],
+                'resultTitle'       => $resultObject['SearchResult']['Items'][0]['ItemInfo']['Title']['DisplayValue'],
+                'resultPrice'       => str_replace('.', ',', $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['Price']['DisplayAmount']),
+                'resultSavings'     => str_replace('.', ',', $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['Price']['Savings']['DisplayAmount']),
+                'resultSavingBasis' => str_replace('.', ',', $resultObject['SearchResult']['Items'][0]['Offers']['Listings'][0]['SavingBasis']['DisplayAmount']),
+                'resultObject'      => $resultObject
             ]);
         }
     }
