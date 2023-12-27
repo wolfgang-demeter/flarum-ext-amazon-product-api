@@ -116,31 +116,31 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         $stream = stream_context_create($params);
 
         // fallback URL fro HTML parsing
-        $fallbackParsingUrl = 'https://'.$amzWebservices[$country]['marketplace'].'/dp/'.$asin;
+        $fallbackScrapingUrl = 'https://'.$amzWebservices[$country]['marketplace'].'/dp/'.$asin;
 
         // Request Amazon Product Advertising API
         try {
             $fp = @fopen('https://'.$host.$path, 'rb', false, $stream);
         } catch (\Throwable $th) {
-            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            return $this->handleHtmlScrapingFallback($fallbackScrapingUrl);
             // return new JsonResponse(['exception' => 'api-connection-error']);
         }
 
         try {
             $response = @stream_get_contents($fp);
         } catch (\Throwable $th) {
-            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            return $this->handleHtmlScrapingFallback($fallbackScrapingUrl);
             // return new JsonResponse(['exception' => 'no-response-return']);
         }
 
         // return results
         $resultObject = json_decode($response, true);
         if ($resultObject == null) {
-            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            return $this->handleHtmlScrapingFallback($fallbackScrapingUrl);
             // probably no qualified sales on partnerTag
             // return new JsonResponse(['exception' => 'no-results-null']);
         } else if ($resultObject['Errors']) {
-            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            return $this->handleHtmlScrapingFallback($fallbackScrapingUrl);
             // return new JsonResponse([
             //     'exception'     => 'no-results-error',
             //     'resultObject'  => $resultObject
@@ -158,7 +158,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         }
     }
 
-    private function handleHtmlParsingFallback($resultUrl)
+    private function handleHtmlScrapingFallback($resultUrl)
     {
         $guzzleClient = new GuzzleHttpClient();
         $guzzleResponse = $guzzleClient->request('GET', $resultUrl);

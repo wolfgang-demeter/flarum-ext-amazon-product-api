@@ -8,7 +8,7 @@ wd-amazon-product-api:
       it: amazon.it - Italy
       uk: amazon.co.uk - United Kingdom
       us: amazon.com - USA
-    help_text: The <a>Amazon Product Advertising API (PA-API)</a> only returns results if the country-specific account has qualified sales and has been accepted into the Amazon Associates Program!
+    help_text: The <a>Amazon Product Advertising API (PA-API)</a> only returns results if the country-specific account has qualified sales and has been accepted into the Amazon Associates Program! If the API does not return any results, an attempt is made to obtain relevant data via HTML scraping.
 
   admin:
     permission:
