@@ -161,7 +161,11 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
     private function handleHtmlScrapingFallback($resultUrl)
     {
         $guzzleClient = new GuzzleHttpClient();
-        $guzzleResponse = $guzzleClient->request('GET', $resultUrl);
+        $guzzleResponse = $guzzleClient->request('GET', $resultUrl, [
+            'headers' => [
+                'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
+            ]
+        ]);
 
         if ($guzzleResponse->getStatusCode() != 200) {
             return new JsonResponse(['exception' => 'html-scraping-fallback-error']);
@@ -198,6 +202,8 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
             'resultUrl'     => $resultUrl,
             'resultImage'   => $resultImage,
             'resultTitle'   => $resultTitle,
+            'resultPrice'   => $resultPrice,
+            'resultSavingBasis' => $resultSavingBasis,
         ]);
     }
 }
