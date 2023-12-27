@@ -4,6 +4,7 @@ namespace WD\AmazonProductApi\Api\Controllers;
 
 use WD\AmazonProductApi\AwsV4;
 use Flarum\Settings\SettingsRepositoryInterface;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -42,7 +43,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
             'fr' => array('host' => 'webservices.amazon.fr', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.fr'),
             'it' => array('host' => 'webservices.amazon.it', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.it'),
             'uk' => array('host' => 'webservices.amazon.co.uk', 'region' => 'eu-west-1', 'marketplace' => 'www.amazon.co.uk'),
-            'us' => array('host' => 'webservices.amazon.us', 'region' => 'us-east-1', 'marketplace' => 'www.amazon.us'),
+            'us' => array('host' => 'webservices.amazon.com', 'region' => 'us-east-1', 'marketplace' => 'www.amazon.com'),
         );
         $asin = isset($request->getQueryParams()['asin']) ? $request->getQueryParams()['asin'] : null;
         $country = isset($request->getQueryParams()['country']) ? $request->getQueryParams()['country'] : null;
@@ -114,29 +115,36 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         );
         $stream = stream_context_create($params);
 
+        // fallback URL fro HTML parsing
+        $fallbackParsingUrl = 'https://'.$amzWebservices[$country]['marketplace'].'/dp/'.$asin;
+
         // Request Amazon Product Advertising API
         try {
             $fp = @fopen('https://'.$host.$path, 'rb', false, $stream);
         } catch (\Throwable $th) {
-            return new JsonResponse(['exception' => 'api-connection-error']);
+            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            // return new JsonResponse(['exception' => 'api-connection-error']);
         }
 
         try {
             $response = @stream_get_contents($fp);
         } catch (\Throwable $th) {
-            return new JsonResponse(['exception' => 'no-response-return']);
+            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            // return new JsonResponse(['exception' => 'no-response-return']);
         }
 
         // return results
         $resultObject = json_decode($response, true);
         if ($resultObject == null) {
+            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
             // probably no qualified sales on partnerTag
-            return new JsonResponse(['exception' => 'no-results-null']);
+            // return new JsonResponse(['exception' => 'no-results-null']);
         } else if ($resultObject['Errors']) {
-            return new JsonResponse([
-                'exception'     => 'no-results-error',
-                'resultObject'  => $resultObject
-            ]);
+            return $this->handleHtmlParsingFallback($fallbackParsingUrl);
+            // return new JsonResponse([
+            //     'exception'     => 'no-results-error',
+            //     'resultObject'  => $resultObject
+            // ]);
         } else {
             return new JsonResponse([
                 'resultUrl'         => substr($resultObject['SearchResult']['Items'][0]['DetailPageURL'], 0, strpos($resultObject['SearchResult']['Items'][0]['DetailPageURL'], '?')),
@@ -148,5 +156,48 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
                 'resultObject'      => $resultObject
             ]);
         }
+    }
+
+    private function handleHtmlParsingFallback($resultUrl)
+    {
+        $guzzleClient = new GuzzleHttpClient();
+        $guzzleResponse = $guzzleClient->request('GET', $resultUrl);
+
+        if ($guzzleResponse->getStatusCode() != 200) {
+            return new JsonResponse(['exception' => 'html-parsing-fallback-error']);
+        }
+
+        // HTML is often wonky, this suppresse a lot of warnings
+        libxml_use_internal_errors(true);
+
+        $parsedHtml = new \DOMDocument();
+        $parsedHtml->loadHTML((string)$guzzleResponse->getBody());
+        $xpath = new \DOMXPath($parsedHtml);
+
+        // Image
+        if ($xpath->query('//img[@id="landingImage"]')->item(0)) {
+            $resultImage = str_replace('_SL1500_', '_SL500_', $xpath->query('//img[@id="landingImage"]')->item(0)->getAttribute('data-old-hires'));
+            if (!$resultImage) {
+                $resultImage = str_replace('_SX300_SY300_QL70_ML2_', '_SL500_', $xpath->query('//img[@id="landingImage"]')->item(0)->getAttribute('src'));
+            }
+            if (!$resultImage) {
+                $resultImage = str_replace('_SX342_', '_SL500_', $xpath->query('//img[@id="landingImage"]')->item(0)->getAttribute('src'));
+            }
+        } else {
+            $resultImage = null;
+        }
+
+        // Title
+        $resultTitle = trim($xpath->query('//span[@id="productTitle"]')->item(0)->nodeValue);
+
+        if (!$resultImage || !$resultTitle) {
+            return new JsonResponse(['exception' => 'html-parsing-fallback-error']);
+        }
+
+        return new JsonResponse([
+            'resultUrl'     => $resultUrl,
+            'resultImage'   => $resultImage,
+            'resultTitle'   => $resultTitle,
+        ]);
     }
 }
