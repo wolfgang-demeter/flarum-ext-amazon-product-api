@@ -115,7 +115,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         );
         $stream = stream_context_create($params);
 
-        // fallback URL fro HTML parsing
+        // fallback URL for HTML scraping
         $fallbackScrapingUrl = 'https://'.$amzWebservices[$country]['marketplace'].'/dp/'.$asin;
 
         // Request Amazon Product Advertising API
@@ -164,7 +164,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         $guzzleResponse = $guzzleClient->request('GET', $resultUrl);
 
         if ($guzzleResponse->getStatusCode() != 200) {
-            return new JsonResponse(['exception' => 'html-parsing-fallback-error']);
+            return new JsonResponse(['exception' => 'html-scraping-fallback-error']);
         }
 
         // HTML is often wonky, this suppresse a lot of warnings
@@ -191,7 +191,7 @@ class AmazonProductApiSearchController implements RequestHandlerInterface
         $resultTitle = trim($xpath->query('//span[@id="productTitle"]')->item(0)->nodeValue);
 
         if (!$resultImage || !$resultTitle) {
-            return new JsonResponse(['exception' => 'html-parsing-fallback-error']);
+            return new JsonResponse(['exception' => 'html-scraping-fallback-error']);
         }
 
         return new JsonResponse([
